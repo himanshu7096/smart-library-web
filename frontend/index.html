@@ -1,0 +1,317 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Smart Library | Management Dashboard</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="brand">
+            <div class="brand-icon">S</div>
+            <div>
+                <h2>Smart Library</h2>
+                <span>MANAGEMENT SYSTEM</span>
+            </div>
+        </div>
+
+        <div class="nav-label">WORKSPACE</div>
+
+        <nav>
+            <button class="nav-link active" data-page="dashboard">
+                <span>▦</span> Dashboard
+            </button>
+
+            <button class="nav-link" data-page="books">
+                <span>▤</span> All Books
+            </button>
+
+            <button class="nav-link" data-page="add">
+                <span>＋</span> Add New Book
+            </button>
+
+            <button class="nav-link" data-page="issued">
+                <span>↗</span> Issued Books
+            </button>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <div class="system-status">
+                <span class="status-dot"></span>
+                <div>
+                    <strong>System Online</strong>
+                    <small>Local development mode</small>
+                </div>
+            </div>
+            <p>Smart Library v1.0</p>
+        </div>
+
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main">
+
+        <header class="topbar">
+            <div>
+                <span class="breadcrumb">Workspace / <b id="breadcrumb">Dashboard</b></span>
+                <h1 id="page-title">Dashboard Overview</h1>
+            </div>
+
+            <div class="top-actions">
+                <span class="local-badge">● LOCAL</span>
+                <div class="avatar">HS</div>
+            </div>
+        </header>
+
+        <!-- DASHBOARD -->
+        <section id="dashboard-page" class="page active">
+
+            <div class="welcome">
+                <div>
+                    <span class="eyebrow">LIBRARY OVERVIEW</span>
+                    <h2>Your library, under control.</h2>
+                    <p>Manage books, track availability and organize your collection.</p>
+                </div>
+
+                <button class="primary-btn" onclick="showPage('add')">
+                    + Add New Book
+                </button>
+            </div>
+
+            <!-- STATISTICS -->
+            <div class="stats-grid">
+
+                <div class="stat-card">
+                    <div class="stat-top">
+                        <span>Total Books</span>
+                        <div class="stat-icon purple">▤</div>
+                    </div>
+                    <h2 id="total-books">0</h2>
+                    <small>Entire collection</small>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-top">
+                        <span>Available Books</span>
+                        <div class="stat-icon green">✓</div>
+                    </div>
+                    <h2 id="available-books">0</h2>
+                    <small>Ready to issue</small>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-top">
+                        <span>Issued Books</span>
+                        <div class="stat-icon orange">↗</div>
+                    </div>
+                    <h2 id="issued-books">0</h2>
+                    <small>Currently borrowed</small>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-top">
+                        <span>Availability</span>
+                        <div class="stat-icon blue">%</div>
+                    </div>
+                    <h2 id="availability">0%</h2>
+                    <small>Collection availability</small>
+                </div>
+
+            </div>
+
+            <!-- RECENT BOOKS -->
+            <div class="section-card">
+
+                <div class="section-heading">
+                    <div>
+                        <h3>Recent Books</h3>
+                        <p>Your latest library additions</p>
+                    </div>
+
+                    <button class="text-btn" onclick="showPage('books')">
+                        View all →
+                    </button>
+                </div>
+
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>BOOK DETAILS</th>
+                                <th>BOOK ID</th>
+                                <th>PUBLISHER</th>
+                                <th>STATUS</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="recent-table"></tbody>
+                    </table>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- ALL BOOKS -->
+        <section id="books-page" class="page">
+
+            <div class="section-card">
+
+                <div class="section-heading">
+                    <div>
+                        <h3>Book Inventory</h3>
+                        <p>Search and manage your complete collection.</p>
+                    </div>
+
+                    <button class="primary-btn" onclick="showPage('add')">
+                        + Add Book
+                    </button>
+                </div>
+
+                <div class="toolbar">
+                    <input
+                        type="text"
+                        id="search-input"
+                        placeholder="Search by title, author or Book ID..."
+                    >
+
+                    <select id="filter-status">
+                        <option value="all">All Books</option>
+                        <option value="available">Available</option>
+                        <option value="issued">Issued</option>
+                    </select>
+                </div>
+
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>BOOK DETAILS</th>
+                                <th>BOOK ID</th>
+                                <th>PUBLISHER</th>
+                                <th>STATUS</th>
+                                <th>ACTIONS</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="books-table"></tbody>
+                    </table>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- ADD BOOK -->
+        <section id="add-page" class="page">
+
+            <div class="section-card form-card">
+
+                <div class="section-heading">
+                    <div>
+                        <h3>Add a New Book</h3>
+                        <p>Enter the details to add a book to your collection.</p>
+                    </div>
+                </div>
+
+                <form id="book-form">
+
+                    <div class="form-grid">
+
+                        <div class="field">
+                            <label>Book ID</label>
+                            <input type="number" id="book-id" min="1"
+                                placeholder="e.g. 101" required>
+                        </div>
+
+                        <div class="field">
+                            <label>Book Title</label>
+                            <input type="text" id="book-title"
+                                placeholder="Enter book title" required>
+                        </div>
+
+                        <div class="field">
+                            <label>Author Name</label>
+                            <input type="text" id="book-author"
+                                placeholder="Enter author name" required>
+                        </div>
+
+                        <div class="field">
+                            <label>Publisher</label>
+                            <input type="text" id="book-publisher"
+                                placeholder="Enter publisher" required>
+                        </div>
+
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="reset" class="secondary-btn">Clear</button>
+                        <button type="submit" class="primary-btn">Save Book</button>
+                    </div>
+
+                </form>
+
+            </div>
+
+        </section>
+
+        <!-- ISSUED BOOKS -->
+        <section id="issued-page" class="page">
+
+            <div class="section-card">
+
+                <div class="section-heading">
+                    <div>
+                        <h3>Issued Books</h3>
+                        <p>Books currently marked as issued.</p>
+                    </div>
+                </div>
+
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>BOOK DETAILS</th>
+                                <th>BOOK ID</th>
+                                <th>PUBLISHER</th>
+                                <th>ACTION</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="issued-table"></tbody>
+                    </table>
+                </div>
+
+            </div>
+
+        </section>
+
+        <footer>
+            <span>© 2026 Smart Library Management System</span>
+            <span>Built with C++ & Web Technologies</span>
+        </footer>
+
+    </main>
+
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
